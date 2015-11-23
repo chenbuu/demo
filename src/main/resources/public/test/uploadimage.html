@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://www.baidu.com/img/baidu.svg">
+    <title>图片上传</title>
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+  <body>
+    <div class="container">
+		<div class="row" id="row1">
+			<div class="col-md-12">
+				<div>
+					<table class="table">
+					<tr>
+						<td colspan="4">
+							<h2 style="text-align:center;">图片上传</h2>
+						</td>
+					</tr>
+					<tr>
+						<td class="myTitleTd"><font class="myTitle">附件：</font></td>
+						<td colspan="3">
+							<div>
+								<Button class="btn btn-info" style="width:100px;" onclick="$('#fj1').click();">选择文件</Button>
+								<input id="fj1" type="file" name="file" style="display:none;" value=null onchange="$('#fj1Val').text($('#fj1').val());"/>
+								<font id="fj1Val">未选择任何文件</font>
+							</div>
+						</td>
+					</tr>
+					<tr align="center">
+	                   <td colspan="4">
+	                       <button id="searchDo" class="btn btn-info" style="width:80px;" >提交</button>
+	                   </td>
+	                </tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="ajaxfileupload.js"></script>
+    
+  	<script type="text/javascript">
+  	$(function(){
+  		
+	  	$("#searchDo").click(function(){
+	  		$.ajaxFileUpload({
+	   	        url : '/bike/upload',
+	   	        secureuri : false,//安全协议
+	   	        fileElementId: "fj1",//id
+	   	        type : 'POST',
+	   	        dataType : 'json',
+	   	        async : false,
+	   	        success : function(upresult, state) {
+	   	            if (upresult.success) {
+	   	            	alert('上传成功/' + JSON.stringify(upresult));
+	   	            } else {
+	   	            	alert('上传失败/' + JSON.stringify(upresult));
+	   	            }
+	   	        }
+	    	});
+	  	});
+	  	
+	  	
+  	});
+  	</script>
+</body>
+</html>
