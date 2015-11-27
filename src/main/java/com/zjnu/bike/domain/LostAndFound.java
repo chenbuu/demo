@@ -1,5 +1,6 @@
 package com.zjnu.bike.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class LostAndFound {
+public class LostAndFound implements Serializable {
+
+	private static final long serialVersionUID = -5429446501180027845L;
 
 	@Id
 	private String id;

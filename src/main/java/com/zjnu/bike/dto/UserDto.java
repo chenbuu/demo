@@ -1,5 +1,6 @@
 package com.zjnu.bike.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.zjnu.bike.domain.User;
@@ -19,7 +20,9 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserDto implements Serializable {
+
+	private static final long serialVersionUID = 3398777341543102382L;
 
 	public UserDto(User u) throws Exception {
 		this.contactAddr = u.getContactAddr();

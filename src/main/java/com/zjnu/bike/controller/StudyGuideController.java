@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.StudyGuide;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.StudyGuideRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.StudyGuideService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class StudyGuideController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private StudyGuideService studyGuideService;
 
 	@Autowired
 	private StudyGuideRepository studyGuideRepository;
@@ -44,7 +48,7 @@ public class StudyGuideController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.studyGuideRepository.findAll(studyGuide, pageable);
+		return this.studyGuideService.findAll(studyGuide, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class StudyGuideController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.studyGuideRepository.findOne(id);
+			return this.studyGuideService.findOne(id);
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class StudyGuideController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			StudyGuide old = this.studyGuideRepository.findOne(id);
+			StudyGuide old = this.studyGuideService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.studyGuideRepository.save(old);
+			return this.studyGuideService.save(old);
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class StudyGuideController {
 			throw new Exception("权限错误");
 		}
 		if (studyGuide != null) {
-			return this.studyGuideRepository.insert(studyGuide);
+			return this.studyGuideService.insert(studyGuide);
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class StudyGuideController {
 			throw new Exception("权限错误");
 		}
 		if (studyGuide != null) {
-			return this.studyGuideRepository.save(studyGuide);
+			return this.studyGuideService.save(studyGuide);
 		}
 		return null;
 	}

@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.DrivingSchool;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.DrivingSchoolRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.DrivingSchoolService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class DrivingSchoolController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private DrivingSchoolService drivingSchoolService;
 
 	@Autowired
 	private DrivingSchoolRepository drivingSchoolRepository;
@@ -44,7 +48,7 @@ public class DrivingSchoolController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.drivingSchoolRepository.findAll(drivingSchool, pageable);
+		return this.drivingSchoolService.findAll(drivingSchool, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class DrivingSchoolController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.drivingSchoolRepository.findOne(id);
+			return this.drivingSchoolService.findOne(id);
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class DrivingSchoolController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			DrivingSchool old = this.drivingSchoolRepository.findOne(id);
+			DrivingSchool old = this.drivingSchoolService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.drivingSchoolRepository.save(old);
+			return this.drivingSchoolService.save(old);
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class DrivingSchoolController {
 			throw new Exception("权限错误");
 		}
 		if (drivingSchool != null) {
-			return this.drivingSchoolRepository.insert(drivingSchool);
+			return this.drivingSchoolService.insert(drivingSchool);
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class DrivingSchoolController {
 			throw new Exception("权限错误");
 		}
 		if (drivingSchool != null) {
-			return this.drivingSchoolRepository.save(drivingSchool);
+			return this.drivingSchoolService.save(drivingSchool);
 		}
 		return null;
 	}

@@ -1,5 +1,6 @@
 package com.zjnu.bike.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.mongodb.morphia.annotations.Entity;
@@ -21,7 +22,9 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class ManipulateLog {
+public class ManipulateLog implements Serializable {
+
+	private static final long serialVersionUID = 6523931250661464934L;
 
 	@Id
 	private String id;

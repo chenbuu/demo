@@ -17,6 +17,7 @@ import com.zjnu.bike.dto.FileInfoDto;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.FileInfoRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.FileInfoService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +29,9 @@ public class FileInfoController {
 	@Autowired
 	private SessionSecurity sessionSecurity;
 
+	@Autowired
+	private FileInfoService fileInfoService;
+	
 	@Autowired
 	private FileInfoRepository fileInfoRepository;
 
@@ -44,7 +48,7 @@ public class FileInfoController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.fileInfoRepository.findAll(fileInfo, pageable);
+		return this.fileInfoService.findAll(fileInfo, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class FileInfoController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return new FileInfoDto(this.fileInfoRepository.findOne(id));
+			return new FileInfoDto(this.fileInfoService.findOne(id));
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class FileInfoController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			FileInfo old = this.fileInfoRepository.findOne(id);
+			FileInfo old = this.fileInfoService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return new FileInfoDto(this.fileInfoRepository.save(old));
+			return new FileInfoDto(this.fileInfoService.save(old));
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class FileInfoController {
 			throw new Exception("权限错误");
 		}
 		if (fileInfo != null) {
-			return new FileInfoDto(this.fileInfoRepository.insert(fileInfo));
+			return new FileInfoDto(this.fileInfoService.insert(fileInfo));
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class FileInfoController {
 			throw new Exception("权限错误");
 		}
 		if (fileInfo != null) {
-			return new FileInfoDto(this.fileInfoRepository.save(fileInfo));
+			return new FileInfoDto(this.fileInfoService.save(fileInfo));
 		}
 		return null;
 	}

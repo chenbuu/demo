@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.Ride;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.RideRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.RideService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class RideController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private RideService rideService;
 
 	@Autowired
 	private RideRepository rideRepository;
@@ -43,7 +47,7 @@ public class RideController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.rideRepository.findAll(ride, pageable);
+		return this.rideService.findAll(ride, pageable);
 	}
 
 	/**
@@ -59,7 +63,7 @@ public class RideController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.rideRepository.findOne(id);
+			return this.rideService.findOne(id);
 		}
 		return null;
 	}
@@ -77,9 +81,9 @@ public class RideController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			Ride old = this.rideRepository.findOne(id);
+			Ride old = this.rideService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.rideRepository.save(old);
+			return this.rideService.save(old);
 		}
 		return null;
 	}
@@ -97,7 +101,7 @@ public class RideController {
 			throw new Exception("权限错误");
 		}
 		if (ride != null) {
-			return this.rideRepository.insert(ride);
+			return this.rideService.insert(ride);
 		}
 		return null;
 	}
@@ -115,7 +119,7 @@ public class RideController {
 			throw new Exception("权限错误");
 		}
 		if (ride != null) {
-			return this.rideRepository.save(ride);
+			return this.rideService.save(ride);
 		}
 		return null;
 	}

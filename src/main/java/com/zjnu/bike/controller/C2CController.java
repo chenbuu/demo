@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.C2C;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.C2CRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.C2CService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class C2CController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private C2CService c2CService;
 
 	@Autowired
 	private C2CRepository c2CRepository;
@@ -43,7 +47,7 @@ public class C2CController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.c2CRepository.findAll(c2C, pageable);
+		return this.c2CService.findAll(c2C, pageable);
 	}
 
 	/**
@@ -59,7 +63,7 @@ public class C2CController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.c2CRepository.findOne(id);
+			return this.c2CService.findOne(id);
 		}
 		return null;
 	}
@@ -77,9 +81,9 @@ public class C2CController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			C2C old = this.c2CRepository.findOne(id);
+			C2C old = this.c2CService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.c2CRepository.save(old);
+			return this.c2CService.save(old);
 		}
 		return null;
 	}
@@ -97,7 +101,7 @@ public class C2CController {
 			throw new Exception("权限错误");
 		}
 		if (c2C != null) {
-			return this.c2CRepository.insert(c2C);
+			return this.c2CService.insert(c2C);
 		}
 		return null;
 	}
@@ -115,7 +119,7 @@ public class C2CController {
 			throw new Exception("权限错误");
 		}
 		if (c2C != null) {
-			return this.c2CRepository.save(c2C);
+			return this.c2CService.save(c2C);
 		}
 		return null;
 	}

@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.ManipulateLog;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.ManipulateLogRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.ManipulateLogService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class ManipulateLogController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private ManipulateLogService manipulateLogService;
 
 	@Autowired
 	private ManipulateLogRepository manipulateLogRepository;
@@ -44,7 +48,7 @@ public class ManipulateLogController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.manipulateLogRepository.findAll(manipulateLog, pageable);
+		return this.manipulateLogService.findAll(manipulateLog, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class ManipulateLogController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.manipulateLogRepository.findOne(id);
+			return this.manipulateLogService.findOne(id);
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class ManipulateLogController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			ManipulateLog old = this.manipulateLogRepository.findOne(id);
+			ManipulateLog old = this.manipulateLogService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.manipulateLogRepository.save(old);
+			return this.manipulateLogService.save(old);
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class ManipulateLogController {
 			throw new Exception("权限错误");
 		}
 		if (manipulateLog != null) {
-			return this.manipulateLogRepository.insert(manipulateLog);
+			return this.manipulateLogService.insert(manipulateLog);
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class ManipulateLogController {
 			throw new Exception("权限错误");
 		}
 		if (manipulateLog != null) {
-			return this.manipulateLogRepository.save(manipulateLog);
+			return this.manipulateLogService.save(manipulateLog);
 		}
 		return null;
 	}

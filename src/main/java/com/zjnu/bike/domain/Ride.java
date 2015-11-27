@@ -1,5 +1,6 @@
 package com.zjnu.bike.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Ride {
+public class Ride implements Serializable {
+
+	private static final long serialVersionUID = -2315027308353652448L;
 
 	@Id
 	private String id;

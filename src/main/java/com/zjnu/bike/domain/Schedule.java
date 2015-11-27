@@ -1,5 +1,6 @@
 package com.zjnu.bike.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
@@ -22,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Schedule {
+public class Schedule implements Serializable {
+
+	private static final long serialVersionUID = -2518301601309093390L;
 
 	@Id
 	private String id;

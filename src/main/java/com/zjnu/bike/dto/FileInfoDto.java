@@ -1,5 +1,6 @@
 package com.zjnu.bike.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.zjnu.bike.domain.FileInfo;
@@ -17,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class FileInfoDto {
+public class FileInfoDto implements Serializable {
+
+	private static final long serialVersionUID = 6529048698051747838L;
 
 	public FileInfoDto(FileInfo f) throws Exception {
 		this.createTime = f.getCreateTime();

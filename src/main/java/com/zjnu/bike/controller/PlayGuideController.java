@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.PlayGuide;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.PlayGuideRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.PlayGuideService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class PlayGuideController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private PlayGuideService playGuideService;
 
 	@Autowired
 	private PlayGuideRepository playGuideRepository;
@@ -44,7 +48,7 @@ public class PlayGuideController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.playGuideRepository.findAll(playGuide, pageable);
+		return this.playGuideService.findAll(playGuide, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class PlayGuideController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.playGuideRepository.findOne(id);
+			return this.playGuideService.findOne(id);
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class PlayGuideController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			PlayGuide old = this.playGuideRepository.findOne(id);
+			PlayGuide old = this.playGuideService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.playGuideRepository.save(old);
+			return this.playGuideService.save(old);
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class PlayGuideController {
 			throw new Exception("权限错误");
 		}
 		if (playGuide != null) {
-			return this.playGuideRepository.insert(playGuide);
+			return this.playGuideService.insert(playGuide);
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class PlayGuideController {
 			throw new Exception("权限错误");
 		}
 		if (playGuide != null) {
-			return this.playGuideRepository.save(playGuide);
+			return this.playGuideService.save(playGuide);
 		}
 		return null;
 	}

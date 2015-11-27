@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.Schedule;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.ScheduleRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.ScheduleService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class ScheduleController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private ScheduleService scheduleService;
 
 	@Autowired
 	private ScheduleRepository scheduleRepository;
@@ -43,7 +47,7 @@ public class ScheduleController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.scheduleRepository.findAll(schedule, pageable);
+		return this.scheduleService.findAll(schedule, pageable);
 	}
 
 	/**
@@ -59,7 +63,7 @@ public class ScheduleController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.scheduleRepository.findOne(id);
+			return this.scheduleService.findOne(id);
 		}
 		return null;
 	}
@@ -77,9 +81,9 @@ public class ScheduleController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			Schedule old = this.scheduleRepository.findOne(id);
+			Schedule old = this.scheduleService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.scheduleRepository.save(old);
+			return this.scheduleService.save(old);
 		}
 		return null;
 	}
@@ -97,7 +101,7 @@ public class ScheduleController {
 			throw new Exception("权限错误");
 		}
 		if (schedule != null) {
-			return this.scheduleRepository.insert(schedule);
+			return this.scheduleService.insert(schedule);
 		}
 		return null;
 	}
@@ -115,7 +119,7 @@ public class ScheduleController {
 			throw new Exception("权限错误");
 		}
 		if (schedule != null) {
-			return this.scheduleRepository.save(schedule);
+			return this.scheduleService.save(schedule);
 		}
 		return null;
 	}

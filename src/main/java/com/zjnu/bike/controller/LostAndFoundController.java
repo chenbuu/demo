@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.LostAndFound;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.LostAndFoundRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.LostAndFoundService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class LostAndFoundController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private LostAndFoundService lostAndFoundService;
 
 	@Autowired
 	private LostAndFoundRepository lostAndFoundRepository;
@@ -44,7 +48,7 @@ public class LostAndFoundController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.lostAndFoundRepository.findAll(lostAndFound, pageable);
+		return this.lostAndFoundService.findAll(lostAndFound, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class LostAndFoundController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.lostAndFoundRepository.findOne(id);
+			return this.lostAndFoundService.findOne(id);
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class LostAndFoundController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			LostAndFound old = this.lostAndFoundRepository.findOne(id);
+			LostAndFound old = this.lostAndFoundService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.lostAndFoundRepository.save(old);
+			return this.lostAndFoundService.save(old);
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class LostAndFoundController {
 			throw new Exception("权限错误");
 		}
 		if (lostAndFound != null) {
-			return this.lostAndFoundRepository.insert(lostAndFound);
+			return this.lostAndFoundService.insert(lostAndFound);
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class LostAndFoundController {
 			throw new Exception("权限错误");
 		}
 		if (lostAndFound != null) {
-			return this.lostAndFoundRepository.save(lostAndFound);
+			return this.lostAndFoundService.save(lostAndFound);
 		}
 		return null;
 	}

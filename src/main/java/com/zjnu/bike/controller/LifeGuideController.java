@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.LifeGuide;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.LifeGuideRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.LifeGuideService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class LifeGuideController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private LifeGuideService lifeGuideService;
 
 	@Autowired
 	private LifeGuideRepository lifeGuideRepository;
@@ -44,7 +48,7 @@ public class LifeGuideController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.lifeGuideRepository.findAll(lifeGuide, pageable);
+		return this.lifeGuideService.findAll(lifeGuide, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class LifeGuideController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.lifeGuideRepository.findOne(id);
+			return this.lifeGuideService.findOne(id);
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class LifeGuideController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			LifeGuide old = this.lifeGuideRepository.findOne(id);
+			LifeGuide old = this.lifeGuideService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.lifeGuideRepository.save(old);
+			return this.lifeGuideService.save(old);
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class LifeGuideController {
 			throw new Exception("权限错误");
 		}
 		if (lifeGuide != null) {
-			return this.lifeGuideRepository.insert(lifeGuide);
+			return this.lifeGuideService.insert(lifeGuide);
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class LifeGuideController {
 			throw new Exception("权限错误");
 		}
 		if (lifeGuide != null) {
-			return this.lifeGuideRepository.save(lifeGuide);
+			return this.lifeGuideService.save(lifeGuide);
 		}
 		return null;
 	}

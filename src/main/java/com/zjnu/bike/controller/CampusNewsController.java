@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.CampusNews;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.CampusNewsRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.CampusNewsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class CampusNewsController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private CampusNewsService campusNewsService;
 
 	@Autowired
 	private CampusNewsRepository campusNewsRepository;
@@ -44,7 +48,7 @@ public class CampusNewsController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.campusNewsRepository.findAll(campusNews, pageable);
+		return this.campusNewsService.findAll(campusNews, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class CampusNewsController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.campusNewsRepository.findOne(id);
+			return this.campusNewsService.findOne(id);
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class CampusNewsController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			CampusNews old = this.campusNewsRepository.findOne(id);
+			CampusNews old = this.campusNewsService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.campusNewsRepository.save(old);
+			return this.campusNewsService.save(old);
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class CampusNewsController {
 			throw new Exception("权限错误");
 		}
 		if (campusNews != null) {
-			return this.campusNewsRepository.insert(campusNews);
+			return this.campusNewsService.insert(campusNews);
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class CampusNewsController {
 			throw new Exception("权限错误");
 		}
 		if (campusNews != null) {
-			return this.campusNewsRepository.save(campusNews);
+			return this.campusNewsService.save(campusNews);
 		}
 		return null;
 	}

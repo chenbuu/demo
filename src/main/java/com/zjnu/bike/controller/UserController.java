@@ -23,6 +23,7 @@ import com.zjnu.bike.enums.RoleEnum;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.UserRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +34,9 @@ public class UserController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -51,7 +55,7 @@ public class UserController {
 		if (user == null || StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassword())) {
 			throw new Exception("user为空");
 		}
-		List<User> uList = this.userRepository.findAllByUserNameAndPassword(user.getUserName(), user.getPassword());
+		List<User> uList = this.userService.findAllByUserNameAndPassword(user.getUserName(), user.getPassword());
 		if (uList.size() != 1) {
 			throw new Exception("user错误");
 		}
@@ -77,7 +81,7 @@ public class UserController {
 		if (user == null || StringUtils.isBlank(user.getUserName()) || StringUtils.isBlank(user.getPassword())) {
 			throw new Exception("user为空");
 		}
-		List<User> uList = this.userRepository.findAllByUserName(user.getUserName());
+		List<User> uList = this.userService.findAllByUserName(user.getUserName());
 		if (uList.size() != 0) {
 			throw new Exception("用户名已经存在");
 		}
@@ -85,7 +89,7 @@ public class UserController {
 		user.setRole(RoleEnum.Student);
 		user.setStatus(StatusEnum.Use);
 		user.setId(null);
-		this.userRepository.save(user);
+		this.userService.save(user);
 		session.setAttribute("user", user);
 		dataMap.put("user", new UserDto(user));
 		dataMap.put("success", true);
@@ -105,7 +109,7 @@ public class UserController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.userRepository.findAll(user, pageable);
+		return this.userService.findAll(user, pageable);
 	}
 
 	/**
@@ -121,7 +125,7 @@ public class UserController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return new UserDto(this.userRepository.findOne(id));
+			return new UserDto(this.userService.findOne(id));
 		}
 		return null;
 	}
@@ -139,9 +143,9 @@ public class UserController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			User old = this.userRepository.findOne(id);
+			User old = this.userService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return new UserDto(this.userRepository.save(old));
+			return new UserDto(this.userService.save(old));
 		}
 		return null;
 	}
@@ -159,7 +163,7 @@ public class UserController {
 			throw new Exception("权限错误");
 		}
 		if (user != null) {
-			return new UserDto(this.userRepository.insert(user));
+			return new UserDto(this.userService.insert(user));
 		}
 		return null;
 	}
@@ -177,7 +181,7 @@ public class UserController {
 			throw new Exception("权限错误");
 		}
 		if (user != null) {
-			return new UserDto(this.userRepository.save(user));
+			return new UserDto(this.userService.save(user));
 		}
 		return null;
 	}

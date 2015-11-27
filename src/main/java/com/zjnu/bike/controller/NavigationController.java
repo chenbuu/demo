@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.Navigation;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.NavigationRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.NavigationService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class NavigationController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private NavigationService navigationService;
 
 	@Autowired
 	private NavigationRepository navigationRepository;
@@ -44,7 +48,7 @@ public class NavigationController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.navigationRepository.findAll(navigation, pageable);
+		return this.navigationService.findAll(navigation, pageable);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class NavigationController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.navigationRepository.findOne(id);
+			return this.navigationService.findOne(id);
 		}
 		return null;
 	}
@@ -78,9 +82,9 @@ public class NavigationController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			Navigation old = this.navigationRepository.findOne(id);
+			Navigation old = this.navigationService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.navigationRepository.save(old);
+			return this.navigationService.save(old);
 		}
 		return null;
 	}
@@ -98,7 +102,7 @@ public class NavigationController {
 			throw new Exception("权限错误");
 		}
 		if (navigation != null) {
-			return this.navigationRepository.insert(navigation);
+			return this.navigationService.insert(navigation);
 		}
 		return null;
 	}
@@ -116,7 +120,7 @@ public class NavigationController {
 			throw new Exception("权限错误");
 		}
 		if (navigation != null) {
-			return this.navigationRepository.save(navigation);
+			return this.navigationService.save(navigation);
 		}
 		return null;
 	}

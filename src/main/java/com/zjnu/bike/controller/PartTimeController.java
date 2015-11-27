@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.PartTime;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.PartTimeRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.service.PartTimeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,9 @@ public class PartTimeController {
 
 	@Autowired
 	private SessionSecurity sessionSecurity;
+
+	@Autowired
+	private PartTimeService partTimeService;
 
 	@Autowired
 	private PartTimeRepository partTimeRepository;
@@ -43,7 +47,7 @@ public class PartTimeController {
 		if (!this.sessionSecurity.getMethod(session)) {
 			throw new Exception("权限错误");
 		}
-		return this.partTimeRepository.findAll(partTime, pageable);
+		return this.partTimeService.findAll(partTime, pageable);
 	}
 
 	/**
@@ -59,7 +63,7 @@ public class PartTimeController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			return this.partTimeRepository.findOne(id);
+			return this.partTimeService.findOne(id);
 		}
 		return null;
 	}
@@ -77,9 +81,9 @@ public class PartTimeController {
 			throw new Exception("权限错误");
 		}
 		if (!StringUtils.isBlank(id)) {
-			PartTime old = this.partTimeRepository.findOne(id);
+			PartTime old = this.partTimeService.findOne(id);
 			old.setStatus(StatusEnum.Unused);
-			return this.partTimeRepository.save(old);
+			return this.partTimeService.save(old);
 		}
 		return null;
 	}
@@ -97,7 +101,7 @@ public class PartTimeController {
 			throw new Exception("权限错误");
 		}
 		if (partTime != null) {
-			return this.partTimeRepository.insert(partTime);
+			return this.partTimeService.insert(partTime);
 		}
 		return null;
 	}
@@ -115,7 +119,7 @@ public class PartTimeController {
 			throw new Exception("权限错误");
 		}
 		if (partTime != null) {
-			return this.partTimeRepository.save(partTime);
+			return this.partTimeService.save(partTime);
 		}
 		return null;
 	}
