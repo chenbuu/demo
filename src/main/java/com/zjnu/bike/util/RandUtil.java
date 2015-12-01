@@ -326,4 +326,23 @@ public class RandUtil {
 		}
 		return null;
 	}
+
+	/**
+	 * 随机属性
+	 * @author ChenTao
+	 * @param <T>
+	 * @param <V>
+	 * @date 2015年12月2日上午12:09:47
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T, V> V getAttr(List<T> values, String attrMethod, Class<V> ec) {
+		T t = getObject(values);
+		try {
+			Method method = t.getClass().getMethod(attrMethod);
+			return (V) method.invoke(t);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
 }

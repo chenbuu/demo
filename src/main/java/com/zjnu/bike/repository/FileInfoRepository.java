@@ -24,14 +24,26 @@ public interface FileInfoRepository extends BaseRepository<FileInfo, String> {
 		if (mod.getOperatorId() != null && !StringUtils.isBlank(mod.getOperatorId().toString())) {
 			builder.and(q.operatorId.eq(mod.getOperatorId()));
 		}
-		if (!StringUtils.isBlank(mod.getFileName())) {
-			builder.and(q.fileName.contains(mod.getFileName()));
+		if (!StringUtils.isBlank(mod.getContentType())) {
+			builder.and(q.contentType.contains(mod.getContentType()));
 		}
-		if (!StringUtils.isBlank(mod.getFileUrl())) {
-			builder.and(q.fileUrl.contains(mod.getFileUrl()));
+		if (!StringUtils.isBlank(mod.getFilename())) {
+			builder.and(q.filename.contains(mod.getFilename()));
 		}
-		if (mod.getCreateTime() != null) {
-			builder.and(q.createTime.goe(mod.getCreateTime()));
+		if (mod.getUploadDate() != null) {
+			builder.and(q.uploadDate.goe(mod.getUploadDate()));
+		}
+		if (mod.getChunkSize() != null) {
+			builder.and(q.chunkSize.eq(mod.getChunkSize()));
+		}
+		if (mod.getLength() != null) {
+			builder.and(q.length.eq(mod.getLength()));
+		}
+		if (!StringUtils.isBlank(mod.getMd5())) {
+			builder.and(q.md5.eq(mod.getMd5()));
+		}
+		if (!StringUtils.isBlank(mod.getDownload())) {
+			builder.and(q.download.eq(mod.getDownload()));
 		}
 		return findAll(builder.getValue(), pageable);
 	}

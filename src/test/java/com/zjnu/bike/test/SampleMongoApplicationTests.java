@@ -16,9 +16,9 @@ import com.zjnu.bike.repository.MongoTemplateRepository;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Tests for {@link SampleMongoApplication}.
- *
- * @author Dave Syer
+ * 
+ * @author ChenTao
+ * @date 2015年12月1日下午3:07:14
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)

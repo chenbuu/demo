@@ -2,6 +2,7 @@ package com.zjnu.bike.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.zjnu.bike.domain.FileInfo;
 import com.zjnu.bike.enums.StatusEnum;
@@ -23,15 +24,25 @@ public class FileInfoDto implements Serializable {
 	private static final long serialVersionUID = 6529048698051747838L;
 
 	public FileInfoDto(FileInfo f) throws Exception {
-		this.createTime = f.getCreateTime();
-		this.fileName = f.getFileName();
-		this.fileUrl = f.getFileUrl();
+		this.aliases = f.getAliases();
+		this.chunkSize = f.getChunkSize();
+		this.contentType = f.getContentType();
+		this.download = f.getDownload();
+		this.filename = f.getFilename();
 		this.id = f.getId();
+		this.length = f.getLength();
+		this.md5 = f.getMd5();
 		this.operatorId = f.getOperatorId();
 		this.status = f.getStatus();
+		this.uploadDate = f.getUploadDate();
 	}
 
 	private String id;
+
+	/**
+	 * 下载外键
+	 */
+	private String download;
 
 	/**
 	 * 操作人User Id
@@ -44,18 +55,38 @@ public class FileInfoDto implements Serializable {
 	private StatusEnum status;
 
 	/**
-	 * 创建时间
-	 */
-	private Date createTime;
-
-	/**
 	 * 文件名称
 	 */
-	private String fileName;
+	private String filename;
 
 	/**
-	 * 文件路径
+	 * ？？？
 	 */
-	private String fileUrl;
+	private List<String> aliases;
+
+	/**
+	 * chunk数量
+	 */
+	private Long chunkSize;
+
+	/**
+	 * 创建时间
+	 */
+	private Date uploadDate;
+
+	/**
+	 * 大小
+	 */
+	private Long length;
+
+	/**
+	 * 文件类型
+	 */
+	private String contentType;
+
+	/**
+	 * MD5
+	 */
+	private String md5;
 
 }

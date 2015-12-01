@@ -42,7 +42,7 @@ public class UserTest {
 	private FileInfoRepository fileInfoRepository;
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void save() throws Exception {
 		System.out.println("---------------save----------------");
 		List<User> uList = new ArrayList<User>();
@@ -59,7 +59,7 @@ public class UserTest {
 			u.setDescription(RandUtil.getStringChineseRange(8, 16));
 			u.setEmail(RandUtil.getEmail());
 			u.setGender(RandUtil.getEnum(GenderEnum.values()));
-			u.setHeadPortraitId(RandUtil.getObjectId(fList));
+			u.setHeadPortraitId(RandUtil.getAttr(fList, "getDownload", String.class));
 			u.setIdentityCard(RandUtil.getStringNumber(18));
 			u.setJobNumber(RandUtil.getStringNumber(10));
 			u.setPassword("1");
@@ -87,6 +87,7 @@ public class UserTest {
 	}
 
 	@Test
+	@Ignore
 	public void addAttribute() throws Exception {
 		System.out.println("--------------addAttribute-----------------");
 		List<User> uList = this.userRepository.findAll();

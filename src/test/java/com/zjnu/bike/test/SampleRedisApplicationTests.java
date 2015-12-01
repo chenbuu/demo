@@ -25,9 +25,9 @@ import com.zjnu.bike.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Tests for {@link SampleMongoApplication}.
- *
- * @author Dave Syer
+ * 
+ * @author ChenTao
+ * @date 2015年12月1日下午3:07:07
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -135,7 +135,7 @@ public class SampleRedisApplicationTests {
 		log.debug("{}", u);*/
 		System.out.println("---------------test end----------------");
 	}
-	
+
 	@Test
 	@Ignore
 	public void test6() throws Exception {
@@ -147,14 +147,14 @@ public class SampleRedisApplicationTests {
 		}
 		System.out.println("---------------test end----------------");
 	}
-	
+
 	@Test
 	//@Ignore
 	public void test7() throws Exception {
 		System.out.println("---------------test7----------------");
 		PageRequest pageRequest = new PageRequest(0, 10);
 		List<User> uList = this.userService.findAll(pageRequest).getContent();
-		List<String> ids = new ArrayList<>(); 
+		List<String> ids = new ArrayList<>();
 		for (User u : uList) {
 			ids.add(u.getId());
 		}

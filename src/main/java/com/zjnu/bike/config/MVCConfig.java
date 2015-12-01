@@ -1,9 +1,9 @@
 package com.zjnu.bike.config;
 
-import lombok.Getter;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
+import lombok.Getter;
 
 /**
  * 配置文件入口
@@ -15,9 +15,6 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 public class MVCConfig {
 
-	@Value("${upload.path}")
-	private String uploadPath;
-	
 	@Value("${developer.mode}")
 	private Boolean developerMode;
 }

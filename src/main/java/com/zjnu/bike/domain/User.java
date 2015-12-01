@@ -34,7 +34,7 @@ public class User implements Serializable {
 	private String id;
 
 	/**
-	 * 头像FileInfo Id
+	 * 头像FileInfo的download属性
 	 */
 	private String headPortraitId;
 
@@ -101,7 +101,7 @@ public class User implements Serializable {
 	 */
 	@JsonIgnore
 	private String phoneShorter;
-	
+
 	/**
 	 * 身份证
 	 */

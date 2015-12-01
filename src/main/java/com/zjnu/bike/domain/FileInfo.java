@@ -2,6 +2,7 @@ package com.zjnu.bike.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
@@ -32,6 +33,11 @@ public class FileInfo implements Serializable {
 	private String id;
 
 	/**
+	 * 下载外键
+	 */
+	private String download;
+
+	/**
 	 * 操作人User Id
 	 */
 	@JsonIgnore
@@ -43,21 +49,45 @@ public class FileInfo implements Serializable {
 	private StatusEnum status;
 
 	/**
-	 * 创建时间
-	 */
-	@JsonIgnore
-	private Date createTime;
-
-	/**
 	 * 文件名称
 	 */
 	@JsonIgnore
-	private String fileName;
+	private String filename;
 
 	/**
-	 * 文件路径
+	 * ？？？
 	 */
 	@JsonIgnore
-	private String fileUrl;
+	private List<String> aliases;
+
+	/**
+	 * chunk数量
+	 */
+	@JsonIgnore
+	private Long chunkSize;
+
+	/**
+	 * 创建时间
+	 */
+	@JsonIgnore
+	private Date uploadDate;
+
+	/**
+	 * 大小
+	 */
+	@JsonIgnore
+	private Long length;
+
+	/**
+	 * 文件类型
+	 */
+	@JsonIgnore
+	private String contentType;
+
+	/**
+	 * MD5
+	 */
+	@JsonIgnore
+	private String md5;
 
 }
