@@ -1,5 +1,7 @@
 package com.zjnu.bike.repository;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,8 +11,11 @@ import org.springframework.data.domain.Pageable;
 import com.mysema.query.BooleanBuilder;
 import com.zjnu.bike.domain.QSchedule;
 import com.zjnu.bike.domain.Schedule;
+import com.zjnu.bike.domain.User;
 
 public interface ScheduleRepository extends BaseRepository<Schedule, String> {
+
+	List<Schedule> findAllByOperator(User operator);
 
 	default Page<Schedule> findAll(@Valid Schedule mod, Pageable pageable) {
 		if (mod == null) {

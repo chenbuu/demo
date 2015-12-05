@@ -1,5 +1,9 @@
 package com.zjnu.bike.config;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,10 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.zjnu.bike.domain.FileInfo;
 import com.zjnu.bike.domain.User;
+import com.zjnu.bike.enums.FileTypeEnum;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.gridfs.GridFSRepository;
 import com.zjnu.bike.repository.FileInfoRepository;
 import com.zjnu.bike.security.SessionSecurity;
+import com.zjnu.bike.util.ImageUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,7 +54,7 @@ public class Upload {
 	 */
 	@ResponseBody
 	@RequestMapping("/upload")
-	public FileInfo upload(MultipartFile file, HttpServletRequest request, HttpSession session, ModelMap map) throws Exception {
+	public FileInfo upload(MultipartFile file, FileTypeEnum fileType, HttpServletRequest request, HttpSession session, ModelMap map) throws Exception {
 		if (file == null) {
 			throw new Exception("file为空");
 		}
@@ -62,9 +68,39 @@ public class Upload {
 			throw new Exception("保存错误");
 		}
 		fileInfo.setStatus(StatusEnum.Use);
+		if (fileType == null) {
+			fileInfo.setFileType(FileTypeEnum.Unknow);
+		} else {
+			fileInfo.setFileType(fileType);
+		}
 		fileInfo.setOperatorId(user == null ? null : user.getId());
 		fileInfoRepository.save(fileInfo);
 		return fileInfo;
+	}
+
+	/**
+	 * 图片上传
+	 * @author ChenTao
+	 * @date 2015年11月19日下午8:41:04
+	 */
+	@ResponseBody
+	@RequestMapping("/uploadImage")
+	public List<FileInfo> uploadImage(MultipartFile file, HttpServletRequest request, HttpSession session, ModelMap map) throws Exception {
+		List<FileInfo> fileInfos = new ArrayList<FileInfo>();
+		FileInfo fileInfo1 = upload(file, FileTypeEnum.BigImage, request, session, map);
+		fileInfos.add(fileInfo1);
+		InputStream in = ImageUtil.thumbnailImage(file.getInputStream(), file.getOriginalFilename(), 64, 64);
+		FileInfo fileInfo2 = gridFSRepository.saveFile(in, "samll_" + file.getOriginalFilename(), request.getContentType());
+		if (fileInfo2 == null || StringUtils.isBlank(fileInfo2.getDownload())) {
+			throw new Exception("保存错误");
+		}
+		fileInfo2.setStatus(StatusEnum.Use);
+		fileInfo2.setFileType(FileTypeEnum.SmallImage);
+		fileInfo2.setOperatorId(fileInfo1.getOperatorId());
+		fileInfoRepository.save(fileInfo2);
+		fileInfos.add(fileInfo2);
+		log.debug("{}", fileInfos);
+		return fileInfos;
 	}
 
 	/**

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zjnu.bike.domain.Schedule;
+import com.zjnu.bike.domain.User;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.ScheduleRepository;
 import com.zjnu.bike.security.SessionSecurity;
@@ -33,6 +34,24 @@ public class ScheduleController {
 
 	@Autowired
 	private ScheduleRepository scheduleRepository;
+
+	/**
+	 * 查询自己课程表
+	 * @author ChenTao
+	 * @date 2015年12月4日下午6:58:11
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/findMySchedule")
+	public Schedule findMySchedule(HttpSession session, ModelMap map) throws Exception {
+		if (!this.sessionSecurity.getMethod(session)) {
+			throw new Exception("权限错误");
+		}
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
+			return this.scheduleService.findMySchedule(user.getId());
+		}
+		return null;
+	}
 
 	/**
 	 * 表格分页查询

@@ -15,6 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.zjnu.bike.Application;
 import com.zjnu.bike.domain.FileInfo;
 import com.zjnu.bike.domain.User;
+import com.zjnu.bike.enums.FileTypeEnum;
 import com.zjnu.bike.enums.GenderEnum;
 import com.zjnu.bike.enums.RoleEnum;
 import com.zjnu.bike.enums.StatusEnum;
@@ -51,6 +52,15 @@ public class UserTest {
 		for (FileInfo f : fList) {
 			log.debug("{}", f);
 		}
+		List<FileInfo> bigImages = new ArrayList<FileInfo>();
+		List<FileInfo> smallImages = new ArrayList<FileInfo>();
+		for (FileInfo f : fList) {
+			if (f.getFileType() == FileTypeEnum.BigImage) {
+				bigImages.add(f);
+			} else if (f.getFileType() == FileTypeEnum.SmallImage) {
+				smallImages.add(f);
+			}
+		}
 		for (int i = 0; i < 100; i++) {
 			User u = new User();
 			u.setUserName(RandUtil.getStringNumberRange(4, 10));
@@ -59,7 +69,7 @@ public class UserTest {
 			u.setDescription(RandUtil.getStringChineseRange(8, 16));
 			u.setEmail(RandUtil.getEmail());
 			u.setGender(RandUtil.getEnum(GenderEnum.values()));
-			u.setHeadPortraitId(RandUtil.getAttr(fList, "getDownload", String.class));
+			u.setHeadPortraitId(RandUtil.getAttr(smallImages, "getDownload", String.class));
 			u.setIdentityCard(RandUtil.getStringNumber(18));
 			u.setJobNumber(RandUtil.getStringNumber(10));
 			u.setPassword("1");

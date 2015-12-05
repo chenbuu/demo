@@ -43,6 +43,12 @@ public class CampusNews implements Serializable {
 	private List<FileInfo> images;
 
 	/**
+	 * 标题图片 "FileInfo"
+	 */
+	@DBRef
+	private FileInfo titleImage;
+
+	/**
 	 * 状态StatusEnum
 	 */
 	private StatusEnum status;

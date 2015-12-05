@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.zjnu.bike.domain.Schedule;
+import com.zjnu.bike.domain.User;
 import com.zjnu.bike.redis.RedisRepository;
 import com.zjnu.bike.repository.ScheduleRepository;
 
@@ -26,6 +27,12 @@ public class ScheduleService {
 
 	@Autowired
 	private ScheduleRepository scheduleRepository;
+
+	public Schedule findMySchedule(String userId) throws Exception {
+		User user = new User();
+		user.setId(userId);
+		return scheduleRepository.findAllByOperator(user).get(0);
+	}
 
 	public Schedule findOne(String id) throws Exception {
 		if (redisRepository.hasKey(id, Schedule.class)) {

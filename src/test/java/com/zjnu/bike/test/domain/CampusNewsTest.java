@@ -15,6 +15,7 @@ import com.zjnu.bike.Application;
 import com.zjnu.bike.domain.CampusNews;
 import com.zjnu.bike.domain.FileInfo;
 import com.zjnu.bike.domain.User;
+import com.zjnu.bike.enums.FileTypeEnum;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.CampusNewsRepository;
 import com.zjnu.bike.repository.FileInfoRepository;
@@ -57,6 +58,15 @@ public class CampusNewsTest {
 		for (FileInfo f : fList) {
 			log.debug("{}", f);
 		}
+		List<FileInfo> bigImages = new ArrayList<FileInfo>();
+		List<FileInfo> smallImages = new ArrayList<FileInfo>();
+		for (FileInfo f : fList) {
+			if (f.getFileType() == FileTypeEnum.BigImage) {
+				bigImages.add(f);
+			} else if (f.getFileType() == FileTypeEnum.SmallImage) {
+				smallImages.add(f);
+			}
+		}
 		for (int i = 0; i < 100; i++) {
 			CampusNews m = new CampusNews();
 			m.setCreateTime(RandUtil.getDate());
@@ -64,7 +74,8 @@ public class CampusNewsTest {
 			m.setStatus(RandUtil.getEnum(StatusEnum.values()));
 			m.setTitle(RandUtil.getStringChineseRange(3, 6));
 			m.setOperator(RandUtil.getObject(uList));
-			m.setImages(RandUtil.getList(fList, 3));
+			m.setImages(RandUtil.getList(bigImages, 3));
+			m.setTitleImage(RandUtil.getObject(smallImages));
 			cList.add(m);
 		}
 		this.campusNewsRepository.save(cList);

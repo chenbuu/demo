@@ -8,6 +8,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zjnu.bike.enums.FileTypeEnum;
 import com.zjnu.bike.enums.StatusEnum;
 
 import lombok.AllArgsConstructor;
@@ -47,6 +48,12 @@ public class FileInfo implements Serializable {
 	 * 状态StatusEnum
 	 */
 	private StatusEnum status;
+
+	/**
+	 * 文件类型
+	 */
+	@JsonIgnore
+	private FileTypeEnum fileType;
 
 	/**
 	 * 文件名称
