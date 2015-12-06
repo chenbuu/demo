@@ -16,6 +16,7 @@ import com.zjnu.bike.domain.CampusNews;
 import com.zjnu.bike.domain.FileInfo;
 import com.zjnu.bike.domain.User;
 import com.zjnu.bike.enums.FileTypeEnum;
+import com.zjnu.bike.enums.NewsTypeEnum;
 import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.repository.CampusNewsRepository;
 import com.zjnu.bike.repository.FileInfoRepository;
@@ -53,7 +54,7 @@ public class CampusNewsTest {
 		for (User u : uList) {
 			log.debug("{}", u);
 		}
-		PageRequest pageRequest2 = new PageRequest(0, 20);
+		PageRequest pageRequest2 = new PageRequest(0, 40);
 		List<FileInfo> fList = this.fileInfoRepository.findAll(pageRequest2).getContent();
 		for (FileInfo f : fList) {
 			log.debug("{}", f);
@@ -71,6 +72,7 @@ public class CampusNewsTest {
 			CampusNews m = new CampusNews();
 			m.setCreateTime(RandUtil.getDate());
 			m.setContent(RandUtil.getStringChineseRange(8, 100));
+			m.setNewsType(RandUtil.getEnum(NewsTypeEnum.values()));
 			m.setStatus(RandUtil.getEnum(StatusEnum.values()));
 			m.setTitle(RandUtil.getStringChineseRange(3, 6));
 			m.setOperator(RandUtil.getObject(uList));

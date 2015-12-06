@@ -8,6 +8,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import com.zjnu.bike.enums.NewsTypeEnum;
 import com.zjnu.bike.enums.StatusEnum;
 
 import lombok.AllArgsConstructor;
@@ -47,6 +48,11 @@ public class CampusNews implements Serializable {
 	 */
 	@DBRef
 	private FileInfo titleImage;
+
+	/**
+	 * 类型NewsTypeEnum
+	 */
+	private NewsTypeEnum newsType;
 
 	/**
 	 * 状态StatusEnum

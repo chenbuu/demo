@@ -53,7 +53,7 @@ public class LostAndFoundTest {
 		for (User u : uList) {
 			log.debug("{}", u);
 		}
-		PageRequest pageRequest2 = new PageRequest(0, 20);
+		PageRequest pageRequest2 = new PageRequest(0, 40);
 		List<FileInfo> fList = this.fileInfoRepository.findAll(pageRequest2).getContent();
 		for (FileInfo f : fList) {
 			log.debug("{}", f);

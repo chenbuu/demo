@@ -47,7 +47,7 @@ public class UserTest {
 	public void save() throws Exception {
 		System.out.println("---------------save----------------");
 		List<User> uList = new ArrayList<User>();
-		PageRequest pageRequest = new PageRequest(0, 20);
+		PageRequest pageRequest = new PageRequest(0, 40);
 		List<FileInfo> fList = this.fileInfoRepository.findAll(pageRequest).getContent();
 		for (FileInfo f : fList) {
 			log.debug("{}", f);
