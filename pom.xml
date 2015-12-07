@@ -83,6 +83,11 @@
 			<artifactId>morphia</artifactId>
 			<version>1.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.8</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -113,25 +118,25 @@
 				</executions>
 				<dependencies>
 					<dependency>
-                        <groupId>com.mysema.querydsl</groupId>
-                        <artifactId>querydsl-apt</artifactId>
-                        <version>${querydsl.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.mysema.querydsl</groupId>
-                        <artifactId>querydsl-mongodb</artifactId>
-                        <version>${querydsl.version}</version>
-                    </dependency>
+						<groupId>com.mysema.querydsl</groupId>
+						<artifactId>querydsl-apt</artifactId>
+						<version>${querydsl.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.mysema.querydsl</groupId>
+						<artifactId>querydsl-mongodb</artifactId>
+						<version>${querydsl.version}</version>
+					</dependency>
 				</dependencies>
 				<configuration>
-                    <logOnlyOnError>true</logOnlyOnError>
-                    <processors>
-                        <processor>com.mysema.query.apt.morphia.MorphiaAnnotationProcessor</processor>
-                    </processors>
-                    <options>
-                        <querydsl.entityAccessors>true</querydsl.entityAccessors>
-                    </options>
-                </configuration>
+					<logOnlyOnError>true</logOnlyOnError>
+					<processors>
+						<processor>com.mysema.query.apt.morphia.MorphiaAnnotationProcessor</processor>
+					</processors>
+					<options>
+						<querydsl.entityAccessors>true</querydsl.entityAccessors>
+					</options>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

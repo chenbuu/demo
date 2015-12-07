@@ -61,7 +61,7 @@ public class UserTest {
 				smallImages.add(f);
 			}
 		}
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			User u = new User();
 			u.setUserName(RandUtil.getStringNumberRange(4, 10));
 			u.setContactAddr(RandUtil.getStringChineseRange(8, 16));
@@ -83,6 +83,8 @@ public class UserTest {
 			uList.add(u);
 		}
 		this.userRepository.save(uList);
+		uList.get(0).setUserName("1");
+		this.userRepository.save(uList.get(0));
 		System.out.println("-------------------------------");
 	}
 

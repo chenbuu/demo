@@ -1,6 +1,7 @@
 package com.zjnu.bike.config;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +23,9 @@ import com.zjnu.bike.enums.StatusEnum;
 import com.zjnu.bike.gridfs.GridFSRepository;
 import com.zjnu.bike.repository.FileInfoRepository;
 import com.zjnu.bike.security.SessionSecurity;
-import com.zjnu.bike.util.ImageUtil;
 
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 
 /**
  * 上传
@@ -89,8 +90,15 @@ public class Upload {
 		List<FileInfo> fileInfos = new ArrayList<FileInfo>();
 		FileInfo fileInfo1 = upload(file, FileTypeEnum.BigImage, request, session, map);
 		fileInfos.add(fileInfo1);
-		InputStream in = ImageUtil.thumbnailImage(file.getInputStream(), file.getOriginalFilename(), 64, 64);
-		FileInfo fileInfo2 = gridFSRepository.saveFile(in, "samll_" + file.getOriginalFilename(), request.getContentType());
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Thumbnails.of(file.getInputStream()).size(128, 128).outputFormat("jpg").outputQuality(0.2).toOutputStream(out);
+		out.flush();
+		ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+		String firstName = file.getOriginalFilename();
+		if (firstName.indexOf(".") > -1) {
+			firstName = firstName.substring(0, firstName.lastIndexOf("."));
+		}
+		FileInfo fileInfo2 = gridFSRepository.saveFile(in, "samll_" + firstName + ".jpg", request.getContentType());
 		if (fileInfo2 == null || StringUtils.isBlank(fileInfo2.getDownload())) {
 			throw new Exception("保存错误");
 		}
