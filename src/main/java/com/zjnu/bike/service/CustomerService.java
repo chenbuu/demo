@@ -27,6 +27,7 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
+	//10.7.90.201:8080/bike/campusNews/listCampusNews?newsType=In&page=1&sort=createTime,Desc&sort=createTime,asc
 	public Customer findOne(String id) throws Exception {
 		if (redisRepository.hasKey(id, Customer.class)) {
 			return redisRepository.getObject(id, Customer.class);

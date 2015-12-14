@@ -1,17 +1,21 @@
 package com.zjnu.bike.test.crawler;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomNodeList;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlSpan;
 import com.zjnu.bike.Application;
+import com.zjnu.bike.webclient.CampusNewsClient;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,21 +30,45 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SampleHttpCrawlerTests {
 
+	@Autowired
+	private CampusNewsClient campusNewsClient;
+
 	@Test
 	public void test() throws Exception {
 		System.out.println("-------------------------------");
-		String strURL = "http://www.zjnu.edu.cn/news/common/article_show.aspx?article_id=19259";
-		URL url = new URL(strURL);
-		HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-		InputStreamReader input = new InputStreamReader(httpConn.getInputStream(), "gbk");
-		BufferedReader bufReader = new BufferedReader(input);
-		String line = "";
-		StringBuilder contentBuf = new StringBuilder();
-		while ((line = bufReader.readLine()) != null) {
-			contentBuf.append(line);
+
+		WebClient webClient = new WebClient(BrowserVersion.CHROME);
+		webClient.getOptions().setCssEnabled(false);
+		webClient.getOptions().setJavaScriptEnabled(false);
+		HtmlPage page = webClient.getPage("http://news.163.com/special/00011K6L/rss_gn.xml");
+
+		/*System.out.println("---------------标题----------------");
+		HtmlSpan span1 = (HtmlSpan) page.getElementById("mytitle");
+		System.out.println(span1.asText());
+		System.out.println("-------------------------------");
+
+		System.out.println("---------------正文----------------");
+		HtmlSpan span2 = (HtmlSpan) page.getElementById("mycontent");
+		System.out.println(span2.asText());
+		System.out.println("-------------------------------");
+
+		System.out.println("---------------图片----------------");
+		DomNodeList<HtmlElement> elements = span2.getElementsByTagName("img");
+		for (HtmlElement element : elements) {
+			System.out.println(element.getAttribute("src"));
 		}
-		String buf = contentBuf.toString();
-		System.out.println("captureHtml()的结果：\n" + buf);
+		//log.debug("{}", elements);
+		System.out.println("-------------------------------");*/
+
+		webClient.close();
+		System.out.println("-------------------------------");
+	}
+
+	@Test
+	@Ignore
+	public void test2() throws Exception {
+		System.out.println("-------------------------------");
+		campusNewsClient.detailHandler();
 		System.out.println("-------------------------------");
 	}
 

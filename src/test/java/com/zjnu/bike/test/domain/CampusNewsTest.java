@@ -75,7 +75,7 @@ public class CampusNewsTest {
 			m.setNewsType(RandUtil.getEnum(NewsTypeEnum.values()));
 			m.setStatus(RandUtil.getEnum(StatusEnum.values()));
 			m.setTitle(RandUtil.getStringChineseRange(3, 6));
-			m.setOperator(RandUtil.getObject(uList));
+			m.setBorder(null);
 			m.setImages(RandUtil.getList(bigImages, 3));
 			m.setTitleImage(RandUtil.getObject(smallImages));
 			cList.add(m);

@@ -32,12 +32,6 @@ public class CampusNews implements Serializable {
 	private String id;
 
 	/**
-	 * 操作人User
-	 */
-	@DBRef
-	private User operator;
-
-	/**
 	 * 图片List "FileInfo"
 	 */
 	@DBRef
@@ -73,5 +67,10 @@ public class CampusNews implements Serializable {
 	 * 内容
 	 */
 	private String content;
+
+	/**
+	 * borderId
+	 */
+	private Long border;
 
 }

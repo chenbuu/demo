@@ -30,8 +30,8 @@ public interface CampusNewsRepository extends BaseRepository<CampusNews, String>
 		if (!StringUtils.isBlank(mod.getTitle())) {
 			builder.and(q.title.contains(mod.getTitle()));
 		}
-		if (mod.getOperator() != null && mod.getOperator().getId() != null) {
-			builder.and(q.operator().id.eq(mod.getOperator().getId()));
+		if (mod.getBorder() != null) {
+			builder.and(q.border.eq(mod.getBorder()));
 		}
 		if (mod.getCreateTime() != null) {
 			builder.and(q.createTime.goe(mod.getCreateTime()));
