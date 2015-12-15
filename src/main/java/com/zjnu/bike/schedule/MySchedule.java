@@ -47,6 +47,7 @@ public class MySchedule {
 			log.debug("信息: 任务定时器开始执行");
 			log.debug("info: getCampusNews start");
 			campusNewsClient.detailHandler();
+			campusNewsClient.outDetailHandler();
 			log.debug("info: getCampusNews end");
 			log.debug("信息: 任务定时器执行结束");
 		} catch (Exception e) {

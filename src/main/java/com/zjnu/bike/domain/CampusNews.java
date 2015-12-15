@@ -69,6 +69,11 @@ public class CampusNews implements Serializable {
 	private String content;
 
 	/**
+	 * 摘要
+	 */
+	private String summary;
+
+	/**
 	 * borderId
 	 */
 	private Long border;
