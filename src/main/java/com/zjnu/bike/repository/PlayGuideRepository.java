@@ -21,14 +21,20 @@ public interface PlayGuideRepository extends BaseRepository<PlayGuide, String> {
 		if (mod.getStatus() != null) {
 			builder.and(q.status.eq(mod.getStatus()));
 		}
+		if (mod.getBaiduPage() != null) {
+			builder.and(q.baiduPage.eq(mod.getBaiduPage()));
+		}
+		if (mod.getCity() != null) {
+			builder.and(q.city.eq(mod.getCity()));
+		}
 		if (!StringUtils.isBlank(mod.getContent())) {
 			builder.and(q.content.contains(mod.getContent()));
 		}
+		if (!StringUtils.isBlank(mod.getSummary())) {
+			builder.and(q.summary.contains(mod.getSummary()));
+		}
 		if (!StringUtils.isBlank(mod.getTitle())) {
 			builder.and(q.title.contains(mod.getTitle()));
-		}
-		if (mod.getOperator() != null && mod.getOperator().getId() != null) {
-			builder.and(q.operator().id.eq(mod.getOperator().getId()));
 		}
 		if (mod.getCreateTime() != null) {
 			builder.and(q.createTime.goe(mod.getCreateTime()));

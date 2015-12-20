@@ -2,12 +2,12 @@ package com.zjnu.bike.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import com.zjnu.bike.enums.CityEnum;
 import com.zjnu.bike.enums.StatusEnum;
 
 import lombok.AllArgsConstructor;
@@ -31,16 +31,9 @@ public class PlayGuide implements Serializable {
 	private String id;
 
 	/**
-	 * 操作人User
+	 * 城市CityEnum
 	 */
-	@DBRef
-	private User operator;
-
-	/**
-	 * 图片List "FileInfo"
-	 */
-	@DBRef
-	private List<FileInfo> images;
+	private CityEnum city;
 
 	/**
 	 * 标题图片 "FileInfo"
@@ -68,4 +61,13 @@ public class PlayGuide implements Serializable {
 	 */
 	private String content;
 
+	/**
+	 * 摘要
+	 */
+	private String summary;
+
+	/**
+	 * 百度页码
+	 */
+	private Integer baiduPage;
 }

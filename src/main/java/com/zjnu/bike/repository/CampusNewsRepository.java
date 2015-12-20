@@ -27,6 +27,9 @@ public interface CampusNewsRepository extends BaseRepository<CampusNews, String>
 		if (!StringUtils.isBlank(mod.getContent())) {
 			builder.and(q.content.contains(mod.getContent()));
 		}
+		if (!StringUtils.isBlank(mod.getSummary())) {
+			builder.and(q.summary.contains(mod.getSummary()));
+		}
 		if (!StringUtils.isBlank(mod.getTitle())) {
 			builder.and(q.title.contains(mod.getTitle()));
 		}

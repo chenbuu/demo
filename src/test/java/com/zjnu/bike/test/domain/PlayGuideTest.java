@@ -73,8 +73,7 @@ public class PlayGuideTest {
 			m.setContent(RandUtil.getStringChineseRange(8, 100));
 			m.setStatus(RandUtil.getEnum(StatusEnum.values()));
 			m.setTitle(RandUtil.getStringChineseRange(3, 6));
-			m.setOperator(RandUtil.getObject(uList));
-			m.setImages(RandUtil.getList(bigImages, 3));
+			//m.setImages(RandUtil.getList(bigImages, 3));
 			m.setTitleImage(RandUtil.getObject(smallImages));
 			cList.add(m);
 		}
